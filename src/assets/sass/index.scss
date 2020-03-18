@@ -1,0 +1,13 @@
+// Order Matters
+// 1 Themes
+@import 'theme/project-theme';
+@import 'theme/bootstrap-theme';
+
+// 2 Third party
+@import 'third-party/bootstrap';
+
+// 3 Components
+@import 'components/example';
+
+// 4 Global Styles
+@import 'global.scss';
