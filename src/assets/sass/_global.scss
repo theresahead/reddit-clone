@@ -1,1 +1,12 @@
 // TBD
+body {
+  min-height: 100vh;
+  background-color: $project-primary;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $white;
+}
