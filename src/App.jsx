@@ -18,9 +18,6 @@ function App() {
                 <Route path="/comments/:id">
                   <Comments />
                 </Route>
-                <Route path="/comments">
-                  <Comments />
-                </Route>
                 <Route path="/">
                   <Home />
                 </Route>
