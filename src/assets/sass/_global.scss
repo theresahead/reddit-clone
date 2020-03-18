@@ -8,5 +8,11 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: $white;
+  a {
+    color: $white;
+    &:hover {
+      color: $white;
+      text-decoration: none;
+    }
+  }
 }
