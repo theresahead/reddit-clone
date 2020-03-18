@@ -7,35 +7,43 @@ import Posts from './components/Posts';
 
 function App() {
   const [posts, setPosts] = useState([]);
-  const [after, setAfter] = useState(null);
-  // const [permalink, setPermalink] = useState(null);
+  const [next, setNext] = useState(null);
+  const [previous, setPrevious] = useState(null);
 
   // const commentsEndpoint = "https://www.reddit.com" + commentId + ".json";
+  // commentId is permalink
 
-  useEffect(() => {
+  function getPostData(redditAfterValue) {
     const category = 'top';
-    console.log('1 after', after);
-    // console.log('1 permalink', permalink);
+
     axios({
       method: 'get',
       baseURL: 'https://www.reddit.com',
       url: `/r/all/${category}.json`,
       params: {
         limit: 5,
-        after,
+        after: redditAfterValue,
+        count: 5,
       },
     }).then((res) => {
-      const after = res.data.data.after;
       const post = res.data.data.children;
-      // const permalink = res.data.data.children.permalink;
-      console.log('2 after', after);
-      // console.log('2 permalink', permalink);
-      console.log('posts', post);
-      setAfter(after);
-      // setPermalink(permalink);
       setPosts(post);
+
+      const nextPosts = res.data.data.after;
+
+      setNext(nextPosts);
+
+      // TODO: previous functionality
+      setPrevious(next);
     });
+  }
+
+  useEffect(() => {
+    getPostData(next);
   }, []);
+
+  console.log('next: ', next);
+  console.log('previous: ', previous);
 
   return (
     <div className="App">
@@ -44,7 +52,14 @@ function App() {
           <div className="col">
             <Header title="Reddit Client" />
             <Posts list={posts} />
-            <Pagination />
+            <Pagination
+              previous={() => {
+                getPostData(previous);
+              }}
+              next={() => {
+                getPostData(next);
+              }}
+            />
           </div>
         </div>
       </div>

@@ -1,20 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function Pagination() {
+function Pagination({ previous, next }) {
   return (
     <nav className="pt-3" aria-label="Page navigation example">
       <ul className="pagination">
         <li className="page-item">
-          <a className="page-link" href="#">
+          <button className="page-link" onClick={previous} type="button">
             Previous
-          </a>
+          </button>
         </li>
         <li className="page-item">
-          <a className="page-link" href="#">
+          <button className="page-link" onClick={next} type="button">
             Next
-          </a>
+          </button>
         </li>
       </ul>
     </nav>
   );
 }
+
+Pagination.defaultProps = {
+  next: null,
+  previous: null,
+};
+
+Pagination.propTypes = {
+  next: PropTypes.func,
+  previous: PropTypes.func,
+};
+
+export default Pagination;
