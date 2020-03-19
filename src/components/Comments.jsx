@@ -6,7 +6,7 @@ const Comments = () => {
   const { id } = useParams();
   const [comments, setComments] = useState([]);
 
-  function getPostData() {
+  function getCommentData() {
     axios({
       method: 'get',
       baseURL: 'https://www.reddit.com',
@@ -17,7 +17,7 @@ const Comments = () => {
   }
 
   useEffect(() => {
-    getPostData();
+    getCommentData();
   }, []);
 
   const listItems = comments.map((comment) => (

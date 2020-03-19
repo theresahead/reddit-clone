@@ -8,9 +8,9 @@ const Home = () => {
   const [next, setNext] = useState(null);
   const [previous, setPrevious] = useState(null);
 
-  // const goBack = previous;
-
-  function getPostData(redditAfterValue) {
+  // Request API data based on before or after params
+  // only one param can exist so set the other to null
+  function getPostData(goBack, goForward) {
     const category = 'top';
 
     axios({
@@ -19,38 +19,36 @@ const Home = () => {
       url: `/r/all/${category}.json`,
       params: {
         limit: 5,
-        after: redditAfterValue,
         count: 5,
+        after: goForward,
+        before: goBack,
       },
     }).then((res) => {
       const post = res.data.data.children;
       setPosts(post);
 
-      const nextPosts = res.data.data.after;
+      const { after, before } = res.data.data;
 
-      setNext(nextPosts);
-
-      // TODO: previous functionality
-      setPrevious(next);
+      setNext(after);
+      setPrevious(before);
     });
   }
 
   useEffect(() => {
-    getPostData(next);
+    getPostData();
   }, []);
 
-  console.log('next: ', next);
-  console.log('previous: ', previous);
-  // tbd
   return (
     <>
       <Posts list={posts} />
       <Pagination
+        // pass click events to getPostData using API before and after params
+        // unused param set to null
         previous={() => {
-          getPostData(previous);
+          getPostData(previous, null);
         }}
         next={() => {
-          getPostData(next);
+          getPostData(null, next);
         }}
       />
     </>
